@@ -13,20 +13,6 @@ const imageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    typeFile: {
-        type: String,
-        required: true
-    },
-    created_by: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    room: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Room',
-        required: true
-    },
     uploadedAt: {
         type: Date,
         required: true

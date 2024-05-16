@@ -15,11 +15,14 @@ const envOptions = {
     confKey: 'config',
     schema: {
         type: 'object',
-        required: ['HOST', 'PORT', 'MONGODB_URI', 'FRONT_URL_CORS'],
+        required: ['HOST', 'PORT', 'MONGODB_URI', 'JWT_SECRET', 'JWT_EXPIRATION', 'JWT_REFRESH_EXPIRATION', 'FRONT_URL_CORS'],
         properties: {
             HOST: { type: 'string'},
             PORT: { type: 'number' },
             MONGODB_URI: { type: 'string' },
+            JWT_SECRET: { type: 'string' },
+            JWT_EXPIRATION: { type: 'string' },
+            JWT_REFRESH_EXPIRATION: { type: 'number' },
             FRONT_URL_CORS: { type: 'string' }
         }
     },

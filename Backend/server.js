@@ -4,7 +4,9 @@ const fastifyCors = require('@fastify/cors')
 const mongoose = require('mongoose')
 const dotenv = require("dotenv")
 const dotenvExpand = require("dotenv-expand")
-//const User = require('./app/models/user.model')
+const Role = require('./app/models/role.model')
+const User = require('./app/models/user.model')
+var bcrypt = require("bcryptjs")
 
 // Load environment variables if needed
 var myEnv = dotenv.config()
@@ -15,7 +17,7 @@ const envOptions = {
     confKey: 'config',
     schema: {
         type: 'object',
-        required: ['HOST', 'PORT', 'MONGODB_URI', 'JWT_SECRET', 'JWT_EXPIRATION', 'JWT_REFRESH_EXPIRATION', 'FRONT_URL_CORS'],
+        required: ['HOST', 'PORT', 'MONGODB_URI', 'JWT_SECRET', 'JWT_EXPIRATION', 'JWT_REFRESH_EXPIRATION', 'FRONT_URL_CORS', 'ADMIN_USER_NAME', 'ADMIN_USER_EMAIL', 'ADMIN_USER_PASSWORD'],
         properties: {
             HOST: { type: 'string'},
             PORT: { type: 'number' },
@@ -23,7 +25,10 @@ const envOptions = {
             JWT_SECRET: { type: 'string' },
             JWT_EXPIRATION: { type: 'string' },
             JWT_REFRESH_EXPIRATION: { type: 'number' },
-            FRONT_URL_CORS: { type: 'string' }
+            FRONT_URL_CORS: { type: 'string' },
+            ADMIN_USER_NAME: { type: 'string' },
+            ADMIN_USER_EMAIL: { type: 'string' },
+            ADMIN_USER_PASSWORD: { type: 'string' }
         }
     },
     dotenv: true
@@ -36,6 +41,8 @@ fastify.register(fastifyEnv, envOptions)
 mongoose
 .connect(process.env.MONGODB_URI, {})
 .then(() => {
+    initializeRoles()
+    initializeAdminUser()
     console.log('Connected to MongoDB')
 })
 .catch((err) => console.error(err));
@@ -63,39 +70,37 @@ fastify.listen({host: process.env.HOST, port: process.env.PORT}, (err) => {
 })
 
 // Functions
-/*async function initializeRoles() {
+async function initializeRoles() {
     try {
-        const roles = await Role.find();
+        const roles = await Role.find()
         if (roles.length === 0) {
             await Role.insertMany([
                 { name: 'user' },
+                { name: 'employee' },
                 { name: 'admin' }
             ]);
-            console.log('Roles initialized');
+            console.log('Roles initialized')
         }
     } catch (error) {
-        console.error('Error initializing roles:', error);
+        console.error('Error initializing roles:', error)
     }
 }
 
 // Functions
 async function initializeAdminUser() {
     try {
-        const adminUser = await User.findOne({name: 'Admin'});
+        const adminUser = await User.findOne({name: process.env.ADMIN_USER_NAME})
         if (!adminUser) {
-            const adminRole = await Role.findOne({name: 'admin'});
+            const adminRole = await Role.findOne({name: 'admin'})
             await User.insertMany([{
                 name: process.env.ADMIN_USER_NAME,
                 email: process.env.ADMIN_USER_EMAIL,
                 password: bcrypt.hashSync(process.env.ADMIN_USER_PASSWORD, 8),
-                position: 'Administrador',
-                isAuthorized: true,
                 roles: [adminRole]
             }]);
-            console.log('Admin user initialized');
+            console.log('Admin user initialized')
         }
     } catch (error) {
-        console.error('Error initializing admin user:', error);
+        console.error('Error initializing admin user:', error)
     }
 }
-*/

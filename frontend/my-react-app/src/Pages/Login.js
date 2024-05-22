@@ -61,7 +61,11 @@ export default function Login() {
   
       // Store additional user information in local storage
       localStorage.setItem('token', result.accessToken);
-      localStorage.setItem('userId', result.id); // Assuming userId is returned in the response
+      localStorage.setItem('userId', result.id);
+
+      if (result.roles.includes("ROLE_ADMIN")) { 
+        window.location.href = "/AdminDashboard";
+      }
 
     } catch (error) {
       console.error("Error:", error);

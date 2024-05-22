@@ -7,7 +7,8 @@ import Home from "./Pages/Home";
 import ProductManagement from "./Pages/ProductManagement";
 import Login from "./Pages/Login";
 import MiCuenta from "./Pages/MiCuenta";
-import ProductDetail from "./Pages/ProductDetail"; // Import the ProductDetail component
+import ProductDetail from "./Pages/ProductDetail";
+import AdminDashboard from "./Pages/AdminDashboard";
 
 function App() {
     return (
@@ -20,7 +21,7 @@ function App() {
                 <Route path="/Login" element={<Login />} />
                 <Route path="/products/:productId" element={<ProductDetail/>} />
                 <Route path="/MiCuenta" element={<MiCuenta/>} />
-
+                <Route path="/AdminDashboard" element={<AdminDashboard/>} />
             </Routes>
         </Router>
     );

@@ -15,6 +15,7 @@ const productRoutes = require('./app/routes/product.routes')
 const authRoutes = require('./app/routes/auth.routes')
 var bcrypt = require("bcryptjs")
 
+
 // Load environment variables if needed
 var myEnv = dotenv.config()
 dotenvExpand.expand(myEnv)

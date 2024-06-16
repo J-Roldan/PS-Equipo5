@@ -24,11 +24,13 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                bat 'icacls .\\jenkins\\scripts\\deliver.sh /grant Todos:F'
-                bat 'icacls .\\jenkins\\scripts\\kill.sh /grant Todos:F'
-                bat '.\\jenkins\\scripts\\deliver.sh'
+                bat 'icacls .\\jenkins\\scripts\\deliver.bat /grant Todos:F'
+                bat 'icacls .\\jenkins\\scripts\\kill.bat /grant Todos:F'
+                bat 'cd ..\\Backend && ..\\jenkins\\scripts\\deliver.bat'
+                bat 'cd ..\\frontend\\my-react-app && ..\\jenkins\\scripts\\deliver.bat'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                bat '.\\jenkins\\scripts\\kill.sh'
+                bat 'cd ..\\Backend && .. .\\jenkins\\scripts\\kill.bat'
+                bat 'cd ..\\frontend\\my-react-app && .. .\\jenkins\\scripts\\kill.bat'
             }
         }
     }

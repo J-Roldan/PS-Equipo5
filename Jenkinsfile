@@ -24,11 +24,11 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                bat 'chmod -R +rwx ./jenkins/scripts/deliver.sh'
-                bat 'chmod -R +rwx ./jenkins/scripts/kill.sh'
-                bat './jenkins/scripts/deliver.sh'
+                bat 'icacls .\\jenkins\\scripts\\deliver.sh /grant Everyone:F'
+                bat 'icacls .\\jenkins\\scripts\\kill.sh /grant Everyone:F'
+                bat '.\\jenkins\\scripts\\deliver.sh'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                bat './jenkins/scripts/kill.sh'
+                bat '.\\jenkins\\scripts\\kill.sh'
             }
         }
     }

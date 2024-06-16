@@ -24,8 +24,8 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                bat 'icacls .\\jenkins\\scripts\\deliver.sh /grant Everyone:F'
-                bat 'icacls .\\jenkins\\scripts\\kill.sh /grant Everyone:F'
+                bat 'icacls .\\jenkins\\scripts\\deliver.sh /grant Todos:F'
+                bat 'icacls .\\jenkins\\scripts\\kill.sh /grant Todos:F'
                 bat '.\\jenkins\\scripts\\deliver.sh'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 bat '.\\jenkins\\scripts\\kill.sh'

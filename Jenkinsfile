@@ -4,7 +4,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'npm install'
+                dir('Backend') {
+                    bat 'npm install'
+                }
+                dir('frontend/my-react-app') {
+                    bat 'npm install'
+                }
             }
         }
         stage('Test'){

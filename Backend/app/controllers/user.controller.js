@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
 const Role = require('../models/role.model')
+const Product = require('../models/product.model')
 var bcrypt = require("bcryptjs")
 
 // Get a list of users sorted by their name
@@ -149,11 +150,73 @@ async function searchUsers(request, reply) {
     }
 }
 
+// Add product to shopping cart
+async function addProductToUser(request, reply) {
+    try {
+        currentUser = await User.findById(request.manualUser.id).populate('roles', '-__v')
+        if (currentUser.roles.some(obj => obj.name === "user")) {
+            const userId = request.params.id
+            const productId = request.body.productId
+            const user = await User.findById(userId).populate('roles')
+            if (!user) {
+                reply.status(404).send({ message: "User not found." })
+                return
+            }
+            const product = await Product.findById(productId)
+            if (!product) {
+                reply.status(404).send({ message: "Product not found." })
+                return
+            }
+            user.products.push(product)
+            await user.save()
+            const userToUpdate = await User.findById(userId)
+            const message = { message: "Product added succesfully to shopping cart." }
+            reply.status(200).send({ ...userToUpdate._doc, ...message })
+        } else {
+            reply.status(403).send({ message: "You do not have permission to access this resource." })
+        }
+    } catch (error) {
+        reply.status(500).send(error)
+    }
+}
+
+// Remove product from shopping cart
+async function removeProductFromUser(request, reply) {
+    try {
+        currentUser = await User.findById(request.manualUser.id).populate('roles', '-__v')
+        if (currentUser.roles.some(obj => obj.name === "user")) {
+            const userId = request.params.id
+            const productId = request.body.productId
+            const user = await User.findById(userId).populate('roles')
+            if (!user) {
+                reply.status(404).send({ message: "User not found." })
+                return
+            }
+            const product = await Product.findById(productId)
+            if (!product) {
+                reply.status(404).send({ message: "Product not found." })
+                return
+            }
+            user.products = user.products.filter(product => product.toString() !== productId)
+            await user.save()
+            const userToUpdate = await User.findById(userId)
+            const message = { message: "Product removed succesfully from shopping cart." }
+            reply.status(200).send({ ...userToUpdate._doc, ...message })
+        } else {
+            reply.status(403).send({ message: "You do not have permission to access this resource." })
+        }
+    } catch (error) {
+        reply.status(500).send(error)
+    }
+}
+
 module.exports = {
     getUsers,
     getUserById,
     createUserEmployee,
     updateUser,
     deleteUser,
-    searchUsers
+    searchUsers,
+    addProductToUser,
+    removeProductFromUser
 }

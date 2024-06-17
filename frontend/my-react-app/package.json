@@ -39,6 +39,6 @@
     ]
   },
   "devDependencies": {
-    "msw": "^2.3.0"
+    "msw": "^2.3.1"
   }
 }

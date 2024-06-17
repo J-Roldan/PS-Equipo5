@@ -15,7 +15,7 @@ const storage = fastifyMulter.diskStorage({
 })
 const upload = fastifyMulter({ storage: storage })
 
-async function productRoutes(fastify, options, done) {
+async function productRoutes(fastify, options) {
     fastify.addHook("onRequest", authenticate)
 
     fastify.get('/', productController.getProducts)
@@ -24,8 +24,7 @@ async function productRoutes(fastify, options, done) {
     fastify.put('/:id', productController.updateProduct)
     fastify.delete('/:id', productController.deleteProduct)
     fastify.get('/search/:name', productController.searchProducts)
-
-    done()
+    
 }
 
 module.exports = productRoutes

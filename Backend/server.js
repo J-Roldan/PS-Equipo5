@@ -60,9 +60,9 @@ fastify.register(fastifyMulter.contentParser)
 // Configure the db with mongoose
 mongoose
 .connect(process.env.MONGODB_URI, {})
-.then(() => {
-    initializeRoles()
-    initializeAdminUser()
+.then(async() => {
+    await initializeRoles()
+    await initializeAdminUser()
     console.log('Connected to MongoDB')
 })
 .catch((err) => console.error(err));

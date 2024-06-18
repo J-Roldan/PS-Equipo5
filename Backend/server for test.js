@@ -141,5 +141,7 @@ async function initializeAdminUser() {
         console.error('Error initializing admin user:', error)
     }
 }
+
+return fastify
 }
 module.exports = app

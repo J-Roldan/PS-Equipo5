@@ -10,9 +10,10 @@ async function userRoutes(fastify, options) {
     fastify.put('/:id', userController.updateUser)
     fastify.delete('/:id', userController.deleteUser)
     fastify.get('/search/:name', userController.searchUsers)
-    fastify.post('/:id/product', userController.addProductToUser)
-    fastify.delete('/:id/product', userController.removeProductFromUser)
-    
+    fastify.post('/product', userController.addProductToUser)
+    fastify.delete('/product', userController.removeProductFromUser)
+    fastify.get('/product', userController.getUserByIdAndProducts)
+
 }
 
 module.exports = userRoutes

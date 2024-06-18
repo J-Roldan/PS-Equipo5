@@ -67,9 +67,17 @@ mongoose
 })
 .catch((err) => console.error(err));
 
+// Determine the origins for CORS
+let origins;
+if (process.env.FRONT_URL_CORS) {
+  origins = process.env.FRONT_URL_CORS.split("*");
+} else {
+  origins = '*'; // Default to allow all origins if FRONT_URL_CORS is not defined
+}
+
 // Configure fastify-cors
 fastify.register(fastifyCors, {
-    origin: process.env.FRONT_URL_CORS.split("*"), // Set the allowed origin(s) or use '*' to allow all origins
+    origin: origins
 })
 
 // Register the fastify static plugin

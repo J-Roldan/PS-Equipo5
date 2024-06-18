@@ -133,4 +133,3 @@ describe('/api/users', () => {
   });
 
 });
-fastify.close()

@@ -160,4 +160,3 @@ describe('/api/products', () => {
   });
 
 });
-fastify.close()

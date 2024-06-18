@@ -1,4 +1,4 @@
-const app = require('../server');
+const app = require('../server for test');
 jest.useFakeTimers();
 const fastify = app();
 describe('GET /', () => {

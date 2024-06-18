@@ -1,4 +1,4 @@
-#FashionTrend-PS
+# FashionTrend-PS
 
 ## Table of contents
 * [General info](#general-info)
